@@ -1,4 +1,5 @@
 venv/
+.bashrc
 
 *.pyc
 __pycache__/
