@@ -31,7 +31,7 @@ def get_notes():
             'SELECT * FROM notes'
             )
     response = db_cursor.fetchall()
-    titles = {"title","context","creation_date"}
+    titles = ["title","context","creation_date"]
     dict_response = []
     dict_temp = {}
     for i in response:
@@ -40,7 +40,7 @@ def get_notes():
         dict_response.append(dict_temp)
             
     print(dict_response)
-    return 'LIST VIEW OF NOTES'
+    return render_template('index.html',context=dict_response)
 
 @bp.route('/notes/<int:id>')
 def get_a_note(id):
@@ -82,3 +82,7 @@ def delete(id):
     # sql_db_main.commit() // for making changes in the table
 
     return 'NOTE DELETE FORM'
+
+@bp.route('/')
+def welcome():
+    return render_template('welcome.html')
