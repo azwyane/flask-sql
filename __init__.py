@@ -2,19 +2,6 @@ from flask import Flask
 from . import db
 
 sql_db = db.init_db()
-# import mysql.connector
-
-
-# sql_db = mysql.connector.connect(
-#   host="localhost",
-#   user="testuser",
-#   password="testuserrandompassword",
-#   database="notes_app"
-# )
-
-
-app= Flask(__name__)
-
 
 def does_table_exists():
   try:
@@ -34,8 +21,14 @@ def does_table_exists():
 
 does_table_exists()
 
+app= Flask(__name__)
+
 from . import main
 app.register_blueprint(main.bp)
-app.add_url_rule('/hello', endpoint='hello')
+app.add_url_rule('/create/note', endpoint='create')
+app.add_url_rule('/notes', endpoint='get_notes')
+app.add_url_rule('/note/<int:id>', endpoint='get_a_note')
+app.add_url_rule('/update/note/<int:id>', endpoint='update')
+app.add_url_rule('/delete/note/<int:id>', endpoint='delete')
 
 
