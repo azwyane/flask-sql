@@ -9,7 +9,7 @@
         <p class="card-text">{{ note.context }}</p>
         <hr>
         <p class="card-text">{{ note.creation_date }}</p>
-        <a href="#" class="btn btn-primary">GO BACK</a>
+        <a href="{{ url_for('get_notes')}}" class="btn btn-primary">GO BACK</a>
       </div>
     </div>
 
