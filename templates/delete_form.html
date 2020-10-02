@@ -1,0 +1,18 @@
+{% extends 'parent.html' %}
+{% block content %}
+<div class="container" style="margin-top: 8% ;" >
+   
+    <div class="card text-white bg-info mb-3">
+        <div class="card-header">DELETED</div>
+        <div class="card-body">
+          <h5 class="card-title">The note has been deleted</h5>
+          <p class="card-text">Once deleting the note it cant be recovered</p>
+          <span>
+            <a href="{{ url_for('get_notes') }}" type="button" class="btn btn-success">
+              
+            GO BACK
+            </a>
+            </span>
+        </div>
+</div>
+{% endblock %}

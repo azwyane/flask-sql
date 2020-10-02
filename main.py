@@ -67,8 +67,7 @@ def get_a_note(id):
     dict_temp = {}
     
     dict_response = dict([(x,y) for x,y in zip(column,response[0])])
-    
-    print(response)    
+   
     print(dict_response)
     return render_template('detail_notes.html',note=dict_response)
 
@@ -76,24 +75,34 @@ def get_a_note(id):
 @bp.route('/update/note/<int:id>')
 def update(id):
     db_cursor = sql_db_main.cursor()
+    db_cursor.execute(
+            f'SELECT * FROM notes WHERE noteid={id}'
+            )
+    response = db_cursor.fetchall()
+    column = ["id","title","context","creation_date"]
+    dict_response = []
+    dict_temp = {}
+    
+    dict_response = dict([(x,y) for x,y in zip(column,response[0])]) 
+    print(dict_response)
     # db_cursor.execute(
     #         'UPDATE notes SET title = "Canyon 123" body = "xyz" WHERE id = id'
 
     #         )
-    # sql_db_main.commit() // for making changes in the table
+    # sql_db_main.commit() 
 
     return 'NOTE UPDATE FORM'
 
 @bp.route('/delete/note/<int:id>')
 def delete(id):
     db_cursor = sql_db_main.cursor()
-    # db_cursor.execute(
-    #         "DELETE FROM notes WHERE id = 'id'"
+    db_cursor.execute(
+            f"DELETE FROM notes WHERE noteid = {id}"
 
-    #         )
-    # sql_db_main.commit() // for making changes in the table
+            )
+    sql_db_main.commit() 
 
-    return 'NOTE DELETE FORM'
+    return render_template('delete_form.html')
 
 @bp.route('/')
 def welcome():
