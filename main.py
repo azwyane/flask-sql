@@ -11,10 +11,12 @@ bp = Blueprint('main', __name__)
 
 # PERFORM CRUD FUNCTIONALITIES
 
-# CREATE DATA 
+# CREATE DATA INTO DATABASE
 @bp.route('/create/note',methods=["GET", "POST"])
 def create():
-    db_cursor = sql_db_main.cursor()
+    if request.method == 'GET':
+        return render_template('notes_form.html')
+    
     if request.method == 'POST':
         req = request.form 
         missing_field = list()
@@ -30,12 +32,12 @@ def create():
             title = str(req["Title"])
             body = str(req["Body"])
             time = str(datetime.now())[0:10]
+            db_cursor = sql_db_main.cursor()
             sql_syntax = f"INSERT INTO notes (title,body,created_on) VALUES ('{title}','{body}','{time}')"
             db_cursor.execute(sql_syntax)
             sql_db_main.commit()
             return redirect('/notes')
 
-    return render_template('notes_form.html')
 
 
 # READ DATA FROM DATABASE
@@ -71,28 +73,44 @@ def get_a_note(id):
     print(dict_response)
     return render_template('detail_notes.html',note=dict_response)
 
-# UPDATE DATA
-@bp.route('/update/note/<int:id>')
+
+
+# UPDATE DATA INTO DATABASE
+@bp.route('/update/note/<int:id>',methods=["GET", "POST"])
 def update(id):
     db_cursor = sql_db_main.cursor()
     db_cursor.execute(
-            f'SELECT * FROM notes WHERE noteid={id}'
+            f'SELECT * FROM notes where noteid = {id}'
             )
     response = db_cursor.fetchall()
     column = ["id","title","context","creation_date"]
     dict_response = []
     dict_temp = {}
     
-    dict_response = dict([(x,y) for x,y in zip(column,response[0])]) 
-    print(dict_response)
-    # db_cursor.execute(
-    #         'UPDATE notes SET title = "Canyon 123" body = "xyz" WHERE id = id'
+    dict_response = dict([(x,y) for x,y in zip(column,response[0])])
+    if request.method == 'POST':
+        req = request.form 
+        missing_field = list()
 
-    #         )
-    # sql_db_main.commit() 
+        for key, val in req.items():
+            if val == "":
+                missing_field.append(key)
 
-    return 'NOTE UPDATE FORM'
+        if missing_field:
+            err = f" You were missing fields for {', '.join(missing_field)}"
+            return render_template("update_form.html", err=err,note=dict_response)
+        else:
+            title = str(req["Title"])
+            body = str(req["Body"])
+            time = str(datetime.now())[0:10]
+            sql_syntax = f"UPDATE notes SET title='{title}',body='{body}' WHERE noteid={id}"
+            db_cursor.execute(sql_syntax)
+            sql_db_main.commit()
+            return redirect('/notes')
+    return render_template("update_form.html",note=dict_response)
 
+
+#DELETE DATA FROM DATABASE
 @bp.route('/delete/note/<int:id>')
 def delete(id):
     db_cursor = sql_db_main.cursor()
