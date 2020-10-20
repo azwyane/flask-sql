@@ -13,7 +13,7 @@ def init_db():
 
 def db_create(title,body,time):
     db_cursor = sql_db_main.cursor()
-    sql_syntax = f"INSERT INTO notes (title,body,created_on) VALUES ('{title}','{body}','{time}')"
+    sql_syntax = f'INSERT INTO notes (title,body,created_on) VALUES ("{title}","{body}","{time}")'
     db_cursor.execute(sql_syntax)
     sql_db_main.commit()
     return
@@ -49,7 +49,7 @@ def db_read(*args):
 
 def db_update(id,title,body,time):
     db_cursor = sql_db_main.cursor()
-    sql_syntax = f"UPDATE notes SET title='{title}',body='{body}' WHERE noteid={id}"
+    sql_syntax = f'UPDATE notes SET title="{title}",body="{body}" WHERE noteid={id}'
     db_cursor.execute(sql_syntax)
     sql_db_main.commit()
     return
@@ -58,7 +58,7 @@ def db_update(id,title,body,time):
 def db_delete(id):
     db_cursor = sql_db_main.cursor()
     db_cursor.execute(
-            f"DELETE FROM notes WHERE noteid = {id}"
+            f'DELETE FROM notes WHERE noteid = {id}'
 
             )
     sql_db_main.commit()
