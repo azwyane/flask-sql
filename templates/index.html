@@ -1,25 +1,36 @@
-{% extends 'parent.html' %}
+{% extends 'navbar.html' %}
 {% block content %}
-<div class="container" style="margin-top: 8% ;">
-  <div class="row">
-    {% for note in context %}
-
-    <div class="col">
-    <div class="card" style="width: 18rem;">
-      <!--<img class="card-img-top" src="..." alt="image">-->
-      <div class="card-body">
-        <h5 class="card-title">{{ note.title }}</h5>
-        <p class="card-text">{{ note.context }}</p>
-        <hr>
-        <p class="card-text">{{ note.creation_date }}</p>
-        <a href="{{ url_for('get_a_note',id=note.id|int)}}" class="btn btn-primary">READ MORE</a>
-      </div>
-    </div>
-
-  </div>
-    {% endfor %}
+  <!--create button start-->
+  <a href="{{url_for('create')}}" class="btn-floating btn-large waves-effect waves-light blue-grey z-depth-2" style="margin-right: 1em;margin-bottom: 0em; position: fixed;z-index: 3000;right: 0;bottom: 50%;"><i class="material-icons">add</i></a>
+  <!--create button end-->
   
-  </div>
+  <!--container start-->  
+  <div class="container mx-auto">
+    
+    <!--row start-->
+    <div class="row">
+      {% for note in context %}
+      <!--column start-->
+      <div class="col s4 m4 l4">
+        <div class="card z-depth-2" style="background-color: rgb(63, 170, 152);width: 18rem;height: 18rem;margin-top: 5%;margin-left: 2%;margin-bottom: 2%;">
+          <div class="card-content white-text">
+            <span class="card-title"><h5>{{note.title}}</h5></span>
+            <span class="card-title">{{note.creation_date}}</span>
+            
+            <p>{{note.context|string|truncate(50)}}</p>
+          </div>
+          <!--readmore button start-->
+          <div class="card-action">
+            <a href="{{ url_for('get_a_note',id=note.id|int)}}" class="btn" style="background-color: teal;">READMORE</a>
+          </div>
+          <!--readmore button end-->
+        </div>
+      </div>  
+      <!--column end--> 
+      {% endfor %}
 
-</div>
+    </div>
+    <!--row end-->
+  </div>  
+  <!--container end-->
 {% endblock %}

@@ -1,12 +1,41 @@
 {% extends 'head.html' %}
-{% block body %}
 
+{% block body %}
+<style>
+    .gradient-text {
+  
+  background-color: rgb(248, 234, 234);
+  background-image: radial-gradient( circle farthest-corner at 10% 20%, rgb(13, 238, 193) 44.9%, rgb(187, 83, 235) 87.8% );
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+h1 {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: normal;
+  font-size: 6em;
+  text-align: center;
+  margin-bottom: 0;
+  margin-bottom: -0.25em;
+}
+</style>
+<div class="container">
     <div class="container">
-        <div class="container">
-            <div class="container">
-                <a href="/notes"> Welcome to notes</a>
+        <div class="row">
+            <div class="center">
+               <h1 class="gradient-text" style="margin-top: 20%;">NOTES</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="center">
+                <a href="{{url_for('get_notes')}}">
+                    <i class="large material-icons" style="width: 50%;height:50%;">content_paste</i>
+                </a>
             </div>
         </div>
     </div>
-
+</div>
 {% endblock %}

@@ -32,7 +32,7 @@ def db_read(*args):
         for tup in response:
             dict_temp = dict([(x,y) for x,y in zip(column,tup)])
             dict_response.append(dict_temp)
-        return dict_response
+        return reversed(dict_response)
     else:
         id = args[0]
         db_cursor.execute(

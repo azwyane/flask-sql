@@ -1,0 +1,16 @@
+{% extends 'head.html' %}
+{% block body %}
+<!--navbar start-->
+<div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper" style="background-color: rgb(91, 196, 190);">
+        <a href="{{url_for('get_notes')}}" class="center brand-logo">NOTES</a>
+      </div>
+    </nav>
+  </div> 
+<!--navbar end-->
+
+{% block content %}
+{% endblock %}
+
+{% endblock %}
