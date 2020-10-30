@@ -30,8 +30,8 @@ def create():
             err = f"Missing fields for {', '.join(missing_field)}"
             return render_template("notes_form.html", err=err)
         else:
-            title = str(req["Title"])
-            body = str(req["Body"])
+            title = str(req["Title"]).replace("\"","\'")
+            body = str(req["Body"]).replace("\"","\'")
             time = str(datetime.now())[0:10]
             db.db_create(title,body,time)
             return redirect('/notes')
@@ -69,8 +69,8 @@ def update(id):
             err = f" You were missing fields for {', '.join(missing_field)}"
             return render_template("update_form.html", err=err,note=dict_response)
         else:
-            title = str(req["Title"])
-            body = str(req["Body"])
+            title = str(req["Title"]).replace("\"","\'")
+            body = str(req["Body"]).replace("\"","\'")
             time = str(datetime.now())[0:10]
             db.db_update(id,title,body,time)
             return redirect('/notes')
