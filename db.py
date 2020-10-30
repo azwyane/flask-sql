@@ -16,6 +16,7 @@ def db_create(title,body,time):
     sql_syntax = f'INSERT INTO notes (title,body,created_on) VALUES ("{title}","{body}","{time}")'
     db_cursor.execute(sql_syntax)
     sql_db_main.commit()
+    db_cursor.close()
     return
 
 
@@ -26,6 +27,7 @@ def db_read(*args):
                 'SELECT * FROM notes'
                 )
         response = db_cursor.fetchall()
+        db_cursor.close()
         column = ["id","title","context","creation_date"]
         dict_response = []
         dict_temp = {}
@@ -39,6 +41,7 @@ def db_read(*args):
             f'SELECT * FROM notes where noteid = {id}'
             )
         response = db_cursor.fetchall()
+        db_cursor.close()
         column = ["id","title","context","creation_date"]
         dict_response = []
         dict_temp = {}
@@ -52,6 +55,7 @@ def db_update(id,title,body,time):
     sql_syntax = f'UPDATE notes SET title="{title}",body="{body}" WHERE noteid={id}'
     db_cursor.execute(sql_syntax)
     sql_db_main.commit()
+    db_cursor.close()
     return
 
 
@@ -62,6 +66,7 @@ def db_delete(id):
 
             )
     sql_db_main.commit()
+    db_cursor.close()
     return
 
 def does_table_exists():
@@ -73,6 +78,7 @@ def does_table_exists():
             )
     print("DATABASE INITIALIZATION")
     print("DONE INTIALIZATION")
+    db_cursor.close()
   except:
     print("*"*8)
     print("*"+"TABLE "+"*")

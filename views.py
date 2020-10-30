@@ -7,7 +7,7 @@ from werkzeug.exceptions import abort
 from . import db
 from datetime import datetime
 
-sql_db_main = db.init_db()
+
 
 bp = Blueprint('views', __name__)
 
