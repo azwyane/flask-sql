@@ -64,4 +64,19 @@ def db_delete(id):
     sql_db_main.commit()
     return
 
+def does_table_exists():
+  try:
+    
+    db_cursor = sql_db_main.cursor()
+    db_cursor.execute(
+            "CREATE TABLE notes(noteid int NOT NULL AUTO_INCREMENT,title VARCHAR(255), body LONGTEXT, created_on VARCHAR(255), PRIMARY KEY(noteid));"
+            )
+    print("DATABASE INITIALIZATION")
+    print("DONE INTIALIZATION")
+  except:
+    print("*"*8)
+    print("*"+"TABLE "+"*")
+    print("*"+"EXISTS"+"*")
+    print("*"*8)
+
 sql_db_main = init_db()

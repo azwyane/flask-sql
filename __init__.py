@@ -1,25 +1,7 @@
 from flask import Flask
 from . import db
 
-sql_db = db.init_db()
-
-def does_table_exists():
-  try:
-    
-    db_cursor = sql_db.cursor()
-    db_cursor.execute(
-            "CREATE TABLE notes(noteid int NOT NULL AUTO_INCREMENT,title VARCHAR(255), body LONGTEXT, created_on VARCHAR(255), PRIMARY KEY(noteid));"
-            )
-    print("DATABASE INITIALIZATION")
-    print("DONE INTIALIZATION")
-  except:
-    print("*"*8)
-    print("*"+"TABLE "+"*")
-    print("*"+"EXISTS"+"*")
-    print("*"*8)
-    
-
-does_table_exists()
+db.does_table_exists()
 
 app= Flask(__name__)
 
