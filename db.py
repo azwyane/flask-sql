@@ -52,7 +52,7 @@ def db_read(*args):
 
 def db_update(id,title,body,time):
     db_cursor = sql_db_main.cursor()
-    sql_syntax = f'UPDATE notes SET title="{title}",body="{body}" WHERE noteid={id}'
+    sql_syntax = f'UPDATE notes SET title="{title}",body="{body}",created_on="{time}" WHERE noteid={id}'
     db_cursor.execute(sql_syntax)
     sql_db_main.commit()
     db_cursor.close()
