@@ -12,7 +12,7 @@
       {% for note in context %}
       <!--column start-->
       <div class="col s12 m4 l4">
-        <div class="card z-depth-2" style="background-color: rgb(63, 170, 152);width: 18rem;height: 18rem;margin-top: 5%;margin-left: 2%;margin-bottom: 2%;">
+        <div class="card z-depth-2" style="background-color: rgb(63, 170, 152);width:auto;height:18rem;margin:5% 0 2% 2%;">
           <div class="card-content white-text">
             <span class="card-title"><h5>{{note.title}}</h5></span>
             <span class="card-title">{{note.creation_date}}</span>
@@ -20,7 +20,7 @@
             <p>{{note.context|string|truncate(50)}}</p>
           </div>
           <!--readmore button start-->
-          <div class="card-action">
+          <div class="card-action" style="height:fit-content;">
             <a href="{{ url_for('get_a_note',id=note.id|int)}}" class="btn" style="background-color: teal;">READMORE</a>
           </div>
           <!--readmore button end-->
