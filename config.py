@@ -1,9 +1,11 @@
 from configparser import ConfigParser
-
 import os
 
-PATH = os.getcwd() + '/DataBase/config.ini'
+# The path neeeds to be changed accordingly 
+# based on the location of the config.ini
+# Config.ini is the editable cofig file for the database
 
+PATH = os.getcwd() + '/DataBase/config.ini'
 
 
 def get_config(filename= PATH,section='mysql'):
