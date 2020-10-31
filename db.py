@@ -1,14 +1,21 @@
-import mysql.connector
+from mysql.connector import MySQLConnection, Error
+from . import config as c
 
 
 def init_db():
-    sql_db = mysql.connector.connect(
-    host="localhost",
-    user="testuser",
-    password="testuserrandompassword",
-    database="notes_app"
-    )
-    return sql_db
+    try:
+        sql_db = MySQLConnection(
+        **c.get_config()
+        )
+        return sql_db
+    except Error as e:
+        print("connection error")
+    finally:
+        sql_db.close()
+        sql_db = MySQLConnection(
+        **c.get_config()
+        )
+        return sql_db
 
 
 def db_create(title,body,time):
