@@ -50,7 +50,11 @@ def get_a_note(id):
     dict_response = db.db_read(id)
     return render_template('detail_notes.html',note=dict_response)
 
-
+@bp.route('/search',methods=['GET'])
+def search_notes():
+    query = request.args.get("query")
+    dict_response = db.db_search(query)
+    return render_template('index.html',context=dict_response)
 
 # UPDATE VIEW
 @bp.route('/update/note/<int:id>',methods=["GET", "POST"])

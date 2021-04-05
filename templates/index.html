@@ -9,6 +9,7 @@
     
     <!--row start-->
     <div class="row">
+      {% if context %}
       {% for note in context %}
       <!--column start-->
       <div class="col s12 m4 l4">
@@ -28,7 +29,10 @@
       </div>  
       <!--column end--> 
       {% endfor %}
-
+    
+      {% else %}
+      Sorry the context isn't available in database.
+      {% endif %}
     </div>
     <!--row end-->
   </div>  
