@@ -197,14 +197,14 @@ def db_tag_delete(id):
     except Error as e:
         print("connection error")
 
-def db_get_by_tag(query):
+def db_get_by_tag(tag):
     try:
         sql_db_main = MySQLConnection(
         **c.get_config()
         )
         db_cursor = sql_db_main.cursor()
         db_cursor.execute(
-                    f'SELECT * FROM notes WHERE tags LIKE "{query}" '
+                    f'SELECT * FROM notes WHERE noteid in (SELECT tags.noteid FROM tags WHERE tag LIKE "{tag}") '
                     )
         response = db_cursor.fetchall()
         db_cursor.close()

@@ -9,6 +9,12 @@
     
     <!--row start-->
     <div class="row">
+      {% if tagged_as %}
+      <h4>Notes Tagged As: {{tagged_as}}</h4>
+      {% endif %}
+      {% if searched_as %}
+      <h4>Search Based On: {{searched_as}}</h4>
+      {% endif %}
       {% if context %}
       {% for note in context %}
       <!--column start-->
@@ -19,7 +25,7 @@
             <span class="card-title">{{note.creation_date}}</span>
             
             {% if note.tags %}
-            <p>Tags: {% for tg in note.tags.split(",") %}{{tg}}       {% endfor %}
+            <p>Tags: {% for tg in note.tags.split(",") %}<a style="color:rgb(209, 212, 27)" href="/tag/{{tg}}">{{tg}}</a>        {% endfor %}
             </p>
             {% endif %}
             

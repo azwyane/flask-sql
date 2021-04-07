@@ -33,10 +33,9 @@ def create():
         else:
             title = str(req["Title"]).replace("\"","\'")
             body = str(req["Body"]).replace("\"","\'")
-            tags = str(req["Tag"]).replace("\"","\'")
+            tags = str(req["Tag"]).replace("\"","\'").replace(" ", "")
             time = str(datetime.now())[0:10]
             noteid = db.db_create(title,body,time,",".join(set(tags.split(","))))
-            print(noteid,"............")
             db.db_tag_create(tags.split(","),noteid)
             return redirect('/notes')
 
@@ -57,7 +56,12 @@ def get_a_note(id):
 def search_notes():
     query = request.args.get("query")
     dict_response = db.db_search(query)
-    return render_template('index.html',context=dict_response)
+    return render_template('index.html',context=dict_response,searched_as=query)
+
+@bp.route('/tag/<tag>',methods=['GET'])
+def get_notes_by_tag(tag):
+    dict_response = db.db_get_by_tag(tag)
+    return render_template('index.html',context=dict_response,tagged_as=tag)    
 
 # UPDATE VIEW
 @bp.route('/update/note/<int:id>',methods=["GET", "POST"])
