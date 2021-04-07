@@ -33,9 +33,10 @@ def create():
         else:
             title = str(req["Title"]).replace("\"","\'")
             body = str(req["Body"]).replace("\"","\'")
-            tags = str(req["Body"]).replace("\"","\'")
+            tags = str(req["Tag"]).replace("\"","\'")
             time = str(datetime.now())[0:10]
-            db.db_create(title,body,time,tags)
+            noteid = db.db_create(title,body,time,",".join(set(tags.split(","))))
+            print(noteid,"............")
             db.db_tag_create(tags.split(","),noteid)
             return redirect('/notes')
 

@@ -16,7 +16,10 @@
             <!--delete button end-->  
             <span class="card-title"><h5>{{note.title}}</h5></span>
             <span class="card-title">{{note.creation_date}}</span>
-            <span class="card-title"><h6>#tag</h6></span>
+            {% if note.tags %}
+            <p>Tags: {% for tg in note.tags.split(",") %}{{tg}}       {% endfor %}
+            </p>
+            {% endif %}
                     
             <p>{{note.context}}</p>
         </div>

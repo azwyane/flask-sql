@@ -156,9 +156,10 @@ def db_tag_create(tag,noteid):
         sql_syntax = 'INSERT INTO tags (tag,noteid) VALUES (%s,%s)'
         db_cursor.executemany(sql_syntax,cleaned_data)
         sql_db_main.commit()
+        id_created = db_cursor.lastrowid
         db_cursor.close()
         sql_db_main.close()
-        return
+        return id_created
     except Error as e:
         print("connection error")
 
@@ -203,12 +204,12 @@ def db_get_by_tag(query):
         )
         db_cursor = sql_db_main.cursor()
         db_cursor.execute(
-                    f'SELECT * FROM tags WHERE title LIKE "%{query}%" '
+                    f'SELECT * FROM notes WHERE tags LIKE "{query}" '
                     )
         response = db_cursor.fetchall()
         db_cursor.close()
         sql_db_main.close()
-        column = ["id","title","context","creation_date"]
+        column = ["id","title","context","creation_date","tags"]
         dict_response = []
         dict_temp = {}
         if not response:
