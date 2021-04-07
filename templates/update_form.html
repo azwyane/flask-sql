@@ -17,6 +17,14 @@
                   <label for="Title">Title</label>
               </div>
           </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input value="{{note.tags}}" id="Tag" name="Tag" type="text">
+              <label for="Body">TAGS(seperated by comma)</label>
+            </div>
+          </div>
+
           <div class="row">
               <div class="input-field col s12">
                 <textarea id="Body" name="Body" class="materialize-textarea">{{note.context}}</textarea>

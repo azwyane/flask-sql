@@ -25,7 +25,7 @@ def create():
         for key, val in req.items():
             if val == "":
                 missing_field.append(key)
-
+        
         if missing_field:
             err = f"Missing fields for {', '.join(missing_field)}"
             note = {"title":req["Title"],"context":req["Body"]}
@@ -33,8 +33,10 @@ def create():
         else:
             title = str(req["Title"]).replace("\"","\'")
             body = str(req["Body"]).replace("\"","\'")
+            tags = str(req["Body"]).replace("\"","\'")
             time = str(datetime.now())[0:10]
-            db.db_create(title,body,time)
+            db.db_create(title,body,time,tags)
+            db.db_tag_create(tags.split(","),noteid)
             return redirect('/notes')
 
 
@@ -77,8 +79,12 @@ def update(id):
         else:
             title = str(req["Title"]).replace("\"","\'")
             body = str(req["Body"]).replace("\"","\'")
+            tags = str(req["Tag"]).replace("\"","\'")
             time = str(datetime.now())[0:10]
-            db.db_update(id,title,body,time)
+            db.db_update(id,title,body,time,tags)
+            noteid = id
+            db.db_tag_delete(noteid)
+            db.db_tag_create(tags.split(","),noteid)
             return redirect('/notes')
 
     return render_template("update_form.html",note=dict_response)
