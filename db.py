@@ -11,9 +11,10 @@ def db_create(title,body,time,tags):
         sql_syntax = f'INSERT INTO notes (title,body,created_on,tags) VALUES ("{title}","{body}","{time}","{tags}")'
         db_cursor.execute(sql_syntax)
         sql_db_main.commit()
+        id_created = db_cursor.lastrowid
         db_cursor.close()
         sql_db_main.close()
-        return
+        return id_created
     except Error as e:
         print("connection error")
 
@@ -156,10 +157,9 @@ def db_tag_create(tag,noteid):
         sql_syntax = 'INSERT INTO tags (tag,noteid) VALUES (%s,%s)'
         db_cursor.executemany(sql_syntax,cleaned_data)
         sql_db_main.commit()
-        id_created = db_cursor.lastrowid
         db_cursor.close()
         sql_db_main.close()
-        return id_created
+        return 
     except Error as e:
         print("connection error")
 
