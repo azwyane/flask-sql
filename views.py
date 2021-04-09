@@ -28,7 +28,7 @@ def create():
         
         if missing_field:
             err = f"Missing fields for {', '.join(missing_field)}"
-            note = {"title":req["Title"],"context":req["Body"]}
+            note = {"title":req["Title"],"body":req["Body"],"tags":req["Tag"]}
             return render_template("update_form.html", err=err,note=note)
         else:
             title = str(req["Title"]).replace("\"","\'")
@@ -51,7 +51,7 @@ def get_notes():
 @bp.route('/notes/<int:id>',methods=['GET'])
 def get_a_note(id):
     dict_response = db.db_read(id)
-    return render_template('detail_notes.html',note=dict_response)
+    return render_template('detail_notes.html',note=dict_response[0])
 
 @bp.route('/search',methods=['GET'])
 def search_notes():
@@ -68,7 +68,7 @@ def get_notes_by_tag(tag):
 @bp.route('/update/note/<int:id>',methods=["GET", "POST"])
 def update(id):
     
-    dict_response = db.db_read(id)
+    dict_response = db.db_read(id)[0]
     
     if request.method == 'POST':
         req = request.form 
@@ -80,7 +80,7 @@ def update(id):
 
         if missing_field:
             err = f" You were missing fields for {', '.join(missing_field)}"
-            note = {"title":req["Title"],"context":req["Body"]}
+            note = {"title":req["Title"],"body":req["Body"],"tags":req["Tag"],"noteid":id}
             return render_template("update_form.html", err=err,note=note)
         else:
             title = str(req["Title"]).replace("\"","\'")

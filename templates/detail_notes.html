@@ -9,19 +9,19 @@
     <div class="card z-depth-2" style="background-color: rgb(63, 170, 152);">
         <div class="card-content white-text">
             <!--create button start-->
-            <a href="{{ url_for('update',id=note.id|int) }}" style="position: relative;"><i class="material-icons" style="color: rgb(78, 77, 77);">create</i></a>
+            <a href="{{ url_for('update',id=note.noteid|int) }}" style="position: relative;"><i class="material-icons" style="color: rgb(78, 77, 77);">create</i></a>
             <!--create button end-->
             <!--delete button start-->
-            <a href="{{ url_for('delete',id=note.id|int) }}" style="position: relative;" ><i class="material-icons" style="color: #e48639;">delete</i></a>
+            <a href="{{ url_for('delete',id=note.noteid|int) }}" style="position: relative;" ><i class="material-icons" style="color: #e48639;">delete</i></a>
             <!--delete button end-->  
             <span class="card-title"><h5>{{note.title}}</h5></span>
-            <span class="card-title">{{note.creation_date}}</span>
+            <span class="card-title">{{note.created_on}}</span>
             {% if note.tags %}
             <p>Tags: {% for tg in note.tags.split(",") %}<a style="color:rgb(209, 212, 27)" href="/tag/{{tg}}">{{tg}}</a>       {% endfor %}
             </p>
             {% endif %}
                     
-            <p>{{note.context}}</p>
+            <p>{{note.body}}</p>
         </div>
                 
     </div>

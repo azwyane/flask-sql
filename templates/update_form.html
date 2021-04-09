@@ -27,7 +27,7 @@
 
           <div class="row">
               <div class="input-field col s12">
-                <textarea id="Body" name="Body" class="materialize-textarea">{{note.context}}</textarea>
+                <textarea id="Body" name="Body" class="materialize-textarea">{{note.body}}</textarea>
                 <label for="Body">BODY/CONTEXT</label>
               </div>
           </div>
@@ -35,9 +35,9 @@
           <input class="btn" type="submit" value="SAVE">
           </div>
       </form>
-      {% if note.id %}
+      {% if note.noteid %}
       <div class="row">
-          <a href="{{ url_for('get_a_note',id=note.id|int) }}" class="btn">GO BACK</a>
+          <a href="{{ url_for('get_a_note',id=note.noteid|int) }}" class="btn">GO BACK</a>
       </div>
       {% else %}
       <div class="row">

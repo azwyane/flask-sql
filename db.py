@@ -24,7 +24,7 @@ def db_read(*args):
         sql_db_main = MySQLConnection(
         **c.get_config()
         )
-        db_cursor = sql_db_main.cursor()
+        db_cursor = sql_db_main.cursor(dictionary=True)
         if not args:
             db_cursor.execute(
                     'SELECT * FROM notes'
@@ -32,16 +32,11 @@ def db_read(*args):
             response = db_cursor.fetchall()
             db_cursor.close()
             sql_db_main.close()
-            column = ["id","title","context","creation_date","tags"]
-            dict_response = []
-            dict_temp = {}
+            
             if not response:
                 return response
             else: 
-                for tup in response:
-                    dict_temp = dict([(x,y) for x,y in zip(column,tup)])
-                    dict_response.append(dict_temp)
-                return reversed(dict_response)
+                return reversed(response)
         else:
             id = args[0]
             db_cursor.execute(
@@ -50,14 +45,10 @@ def db_read(*args):
             response = db_cursor.fetchall()
             db_cursor.close()
             sql_db_main.close()
-            column = ["id","title","context","creation_date","tags"]
-            dict_response = []
-            dict_temp = {}
             if not response:
                 return response
             else: 
-                dict_response = dict([(x,y) for x,y in zip(column,response[0])])
-                return dict_response
+                return response
     except Error as e:
         print("connection error")
 
@@ -99,23 +90,18 @@ def db_search(query):
         sql_db_main = MySQLConnection(
         **c.get_config()
         )
-        db_cursor = sql_db_main.cursor()
+        db_cursor = sql_db_main.cursor(dictionary=True)
         db_cursor.execute(
                     f'SELECT * FROM notes WHERE title LIKE "%{query}%" '
                     )
         response = db_cursor.fetchall()
         db_cursor.close()
         sql_db_main.close()
-        column = ["id","title","context","creation_date"]
-        dict_response = []
-        dict_temp = {}
+
         if not response:
             return response
         else:    
-            for tup in response:
-                dict_temp = dict([(x,y) for x,y in zip(column,tup)])
-                dict_response.append(dict_temp)
-            return reversed(dict_response)
+            return reversed(response)
     except Error as e:
         print("connection error")
 
@@ -202,22 +188,17 @@ def db_get_by_tag(tag):
         sql_db_main = MySQLConnection(
         **c.get_config()
         )
-        db_cursor = sql_db_main.cursor()
+        db_cursor = sql_db_main.cursor(dictionary=True)
         db_cursor.execute(
                     f'SELECT * FROM notes WHERE noteid in (SELECT tags.noteid FROM tags WHERE tag LIKE "{tag}") '
                     )
         response = db_cursor.fetchall()
         db_cursor.close()
         sql_db_main.close()
-        column = ["id","title","context","creation_date","tags"]
-        dict_response = []
-        dict_temp = {}
+
         if not response:
             return response
         else:    
-            for tup in response:
-                dict_temp = dict([(x,y) for x,y in zip(column,tup)])
-                dict_response.append(dict_temp)
-            return reversed(dict_response)
+            return reversed(response)
     except Error as e:
         print("connection error")        
